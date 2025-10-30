@@ -2,7 +2,7 @@ public class Divisor
 {
     public static void main(String[] args) {
         int sum = 0;
-        int number = 28; // Example number
+        int number = 13; // Example number
         System.out.print("Divisors:");
         for (int i = 1; i <= number / 2; i++) {
             if (number % i == 0) {

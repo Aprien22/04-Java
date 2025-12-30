@@ -1,9 +1,11 @@
 import java.util.Scanner;
+import java.lang.String;
+
 
 public class Input {
-
-    public static 
     public static void main(String[] args){
+        
+        String str = "abc";
         
         Scanner input = new Scanner(System.in);
 

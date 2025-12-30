@@ -6,6 +6,6 @@ public class BitTwister {
         int y = 3;
         
         System.out.println(~x);
-        System.out.println("x: " + x + "| y: " + y);
+        System.out.println("x: " + x + " | y: " + y);
     }
 }

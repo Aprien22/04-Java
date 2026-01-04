@@ -1,3 +1,5 @@
+package calculator;
+
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Font;
@@ -147,16 +149,10 @@ public class Calculator extends Frame implements ActionListener {
 
         if (!operator.isEmpty()) {
             switch (operator) {
-                case "+":
-                    first = first.add(current);
-                    break;
-                case "-":
-                    first = first.subtract(current);
-                    break;
-                case "×":
-                    first = first.multiply(current);
-                    break;
-                case "÷":
+                case "+" -> first = first.add(current);
+                case "-" -> first = first.subtract(current);
+                case "×" -> first = first.multiply(current);
+                case "÷" -> {
                     if (current.compareTo(BigDecimal.ZERO) == 0) {
                         display.setText("Error");
                         first = BigDecimal.ZERO;
@@ -165,7 +161,7 @@ public class Calculator extends Frame implements ActionListener {
                         return;
                     }
                     first = first.divide(current, 20, RoundingMode.HALF_UP);
-                    break;
+                }
             }
             display.setText(first.stripTrailingZeros().toPlainString());
         } else {

@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 public class Hangman {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
         Random rand = new Random();
         String path = "words.txt";
         ArrayList<String> wordsToGuess = new ArrayList<>();
@@ -38,38 +37,40 @@ public class Hangman {
 
         System.out.println("Welcome to Hangman!");
 
-        while (attemptsLeft > 0 && !isGuessed) {
-            System.out.println("Word to guess: " + blankWord);
-            System.out.println("Attempts left: " + attemptsLeft);
-            System.out.print("Enter your guess (single letter): ");
-            String guess = scanner.nextLine().toLowerCase();
+        try(Scanner scanner = new Scanner(System.in)) {
+            while (attemptsLeft > 0 && !isGuessed) {
+                System.out.println("Word to guess: " + blankWord);
+                System.out.println("Attempts left: " + attemptsLeft);
+                System.out.print("Enter your guess (single letter): ");
+                String guess = scanner.nextLine().toLowerCase();
 
-            if (guess.length() != 1 || !Character.isLetter(guess.charAt(0))) {
-                System.out.println("Please enter a valid single letter.");
-                continue;
-            }
-
-            char guessedChar = guess.charAt(0);
-            boolean correctGuess = false;
-            StringBuilder newBlankWord = new StringBuilder(blankWord);
-
-            // Check if the guessed character is in the word
-            for (int i = 0; i < word.length(); i++) {
-                if (word.charAt(i) == guessedChar) {
-                    newBlankWord.setCharAt(i * 2, guessedChar);
-                    correctGuess = true;
+                if (guess.length() != 1 || !Character.isLetter(guess.charAt(0))) {
+                    System.out.println("Please enter a valid single letter.");
+                    continue;
                 }
-            }
 
-            // Update the blank word and attempts
-            if (correctGuess) {
-                blankWord = newBlankWord;
-                if (!blankWord.toString().contains("_")) {
-                    isGuessed = true;
+                char guessedChar = guess.charAt(0);
+                boolean correctGuess = false;
+                StringBuilder newBlankWord = new StringBuilder(blankWord);
+
+                // Check if the guessed character is in the word
+                for (int i = 0; i < word.length(); i++) {
+                    if (word.charAt(i) == guessedChar) {
+                        newBlankWord.setCharAt(i * 2, guessedChar);
+                        correctGuess = true;
+                    }
                 }
-            } else {
-                attemptsLeft--;
-                System.out.println("Wrong guess!");
+
+                // Update the blank word and attempts
+                if (correctGuess) {
+                    blankWord = newBlankWord;
+                    if (!blankWord.toString().contains("_")) {
+                        isGuessed = true;
+                    }
+                } else {
+                    attemptsLeft--;
+                    System.out.println("Wrong guess!");
+                }
             }
         }
 
@@ -78,9 +79,5 @@ public class Hangman {
         } else {
             System.out.println("Game over! The word was: " + word);
         }
-
-
-
-        scanner.close();
     }
 }

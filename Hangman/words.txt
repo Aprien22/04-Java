@@ -3,3 +3,12 @@ banana
 cherry
 date
 elderberry
+orange
+kiwi
+strawberry
+blueberry
+chico
+watermelon
+grapes
+dragonfruit
+

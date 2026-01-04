@@ -1,3 +1,8 @@
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -5,10 +10,28 @@ public class Hangman {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         Random rand = new Random();
+        String path = "words.txt";
+        ArrayList<String> wordsToGuess = new ArrayList<>();
 
-        String[] words = {"apple", "banana", "cherry", "date", "elderberry"};
-        String wordToGuess = words[rand.nextInt(words.length)];
-        StringBuilder blankWord = new StringBuilder("_ ".repeat(wordToGuess.length()).trim());
+        try(BufferedReader buffer = new BufferedReader(new FileReader(path))){
+            String line; 
+            while((line = buffer.readLine()) != null)
+            {
+                wordsToGuess.add(line);   
+            }
+        }
+        catch (FileNotFoundException e)
+        {
+            System.out.println("File not found!");
+        }
+        catch(IOException e)
+        {
+            System.out.println("Something went wrong!");
+        }
+
+        String word = wordsToGuess.get(rand.nextInt(wordsToGuess.size()));
+
+        StringBuilder blankWord = new StringBuilder("_ ".repeat(word.length()).trim());
         boolean isGuessed = false;
 
         int attemptsLeft = 6;
@@ -31,8 +54,8 @@ public class Hangman {
             StringBuilder newBlankWord = new StringBuilder(blankWord);
 
             // Check if the guessed character is in the word
-            for (int i = 0; i < wordToGuess.length(); i++) {
-                if (wordToGuess.charAt(i) == guessedChar) {
+            for (int i = 0; i < word.length(); i++) {
+                if (word.charAt(i) == guessedChar) {
                     newBlankWord.setCharAt(i * 2, guessedChar);
                     correctGuess = true;
                 }
@@ -51,9 +74,9 @@ public class Hangman {
         }
 
         if (isGuessed) {
-            System.out.println("Congratulations! You've guessed the word: " + wordToGuess);
+            System.out.println("Congratulations! You've guessed the word: " + word);
         } else {
-            System.out.println("Game over! The word was: " + wordToGuess);
+            System.out.println("Game over! The word was: " + word);
         }
 
 
